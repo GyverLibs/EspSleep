@@ -9,28 +9,12 @@ class EspSleep {
     // rtc_offset - смещение для хранения остатка времени, сон занимает 3 ячейки (12 байт)
     EspSleep(uint8_t rtc_offset = 0, bool instant = 0, WakeMode mode = RF_DEFAULT) : _rtc_offset(rtc_offset), _instant(instant), _mode(mode) {}
 
-    // спать, сутки
-    void sleep_day(uint16_t day) {
-        sleep_us(day * 24 * 60 * 60 * 1000000ull);
-    }
-
-    // спать, часы
-    void sleep_hour(uint32_t hour) {
-        sleep_us(hour * 60 * 60 * 1000000ull);
-    }
-
-    // спать, минуты
-    void sleep_min(uint32_t min) {
-        sleep_us(min * 60 * 1000000ull);
-    }
-
-    // спать, секунды
-    void sleep_sec(uint32_t sec) {
-        sleep_us(sec * 1000000ull);
-    }
-
-    // спать, миллиссекунды
-    void sleep_ms(uint64_t ms) {
+    // спать (миллисекунды, секунды, минуты, часы, дни)
+    void sleep(uint64_t ms, uint64_t sec = 0, uint32_t min = 0, uint16_t hour = 0, uint16_t day = 0) {
+        if (sec) ms += sec * 1000ull;
+        if (min) ms += min * 60 * 1000ull;
+        if (hour) ms += hour * 60 * 60 * 1000ull;
+        if (day) ms += day * 24 * 60 * 60 * 1000ull;
         sleep_us(ms * 1000ull);
     }
 

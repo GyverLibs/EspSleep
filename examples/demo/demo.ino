@@ -19,10 +19,10 @@ void setup() {
     Serial.println("awake!");
 
     // засыпаем например тут
-    sleep.sleep_sec(10);
+    sleep.sleep(5000);
 }
 
 void loop() {
     // уйти в сон можно где угодно
-    // if (foo) sleep.sleep_sec(10);
+    // if (foo) sleep.sleep(5000);
 }

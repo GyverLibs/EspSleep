@@ -31,20 +31,8 @@ EspSleep(uint8_t rtc_offset = 0, bool instant = 0, WakeMode mode = RF_DEFAULT);
 
 ### Описание класса
 ```cpp
-// спать, сутки
-void sleep_day(uint16_t day);
-
-// спать, часы
-void sleep_hour(uint32_t hour);
-
-// спать, минуты
-void sleep_min(uint32_t min);
-
-// спать, секунды
-void sleep_sec(uint32_t sec);
-
-// спать, миллиссекунды
-void sleep_ms(uint64_t ms);
+// спать (миллисекунды, секунды, минуты, часы, дни)
+void sleep(uint64_t ms, uint64_t sec = 0, uint32_t min = 0, uint16_t hour = 0, uint16_t day = 0)
 
 // спать, микросекунды
 void sleep_us(uint64_t us);
@@ -89,12 +77,12 @@ void setup() {
     Serial.println("awake!");
 
     // засыпаем например тут
-    sleep.sleep_sec(10);
+    sleep.sleep(5000);
 }
 
 void loop() {
     // уйти в сон можно где угодно
-    // if (foo) sleep.sleep_sec(10);
+    // if (foo) sleep.sleep(5000);
 }
 ```
 
