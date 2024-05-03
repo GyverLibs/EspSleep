@@ -32,7 +32,7 @@ EspSleep(uint8_t rtc_offset = 0, bool instant = 0, WakeMode mode = RF_DEFAULT);
 ### Описание класса
 ```cpp
 // спать (миллисекунды, секунды, минуты, часы, дни)
-void sleep(uint64_t ms, uint64_t sec = 0, uint32_t min = 0, uint16_t hour = 0, uint16_t day = 0)
+void sleep(uint64_t ms, uint64_t sec = 0, uint32_t min = 0, uint16_t hour = 0, uint16_t day = 0);
 
 // спать, микросекунды
 void sleep_us(uint64_t us);
