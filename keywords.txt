@@ -1,0 +1,27 @@
+#######################################
+# Syntax Coloring Map For EspSleep
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+EspSleep	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+sleep_day	KEYWORD2
+sleep_hour	KEYWORD2
+sleep_min	KEYWORD2
+sleep_sec	KEYWORD2
+sleep_ms	KEYWORD2
+sleep_us	KEYWORD2
+tick	KEYWORD2
+stop	KEYWORD2
+rtc_size	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
