@@ -7,7 +7,7 @@
 class EspSleep {
    public:
     // rtc_offset - смещение для хранения остатка времени, сон занимает 3 ячейки (12 байт). По умолчанию стоит самая последняя ячейка. instant - режим deepSleepInstant
-    EspSleep(uint8_t rtc_offset = 127, bool instant = 0, WakeMode mode = RF_DEFAULT) : _rtc_offset(rtc_offset), _instant(instant), _mode(mode) {}
+    EspSleep(uint8_t rtc_offset = 125, bool instant = 0, WakeMode mode = RF_DEFAULT) : _rtc_offset(rtc_offset), _instant(instant), _mode(mode) {}
 
     // спать (миллисекунды, секунды, минуты, часы, дни)
     void sleep(uint64_t ms, uint64_t sec = 0, uint32_t min = 0, uint16_t hour = 0, uint16_t day = 0) {
