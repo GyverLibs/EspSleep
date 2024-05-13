@@ -48,7 +48,7 @@ class EspSleep {
 
     // размер смещения (в 4-Б блоках, не в байтах!)
     size_t rtc_size() {
-        return 3;
+        return 2 + 2 + 1;  // u64+u64+u32
     }
 
    private:
