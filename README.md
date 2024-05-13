@@ -28,7 +28,7 @@ esp8266
 ```cpp
 EspSleep(uint8_t rtc_offset = 125, bool instant = 0, WakeMode mode = RF_DEFAULT);
 ```
-- `rtc_offset` - смещение для хранения остатка времени, сон занимает 3 ячейки (12 байт) из 127 [(512 байт)](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis). По умолчанию стоит самая последняя возможная ячейка 125
+- `rtc_offset` - смещение для хранения остатка времени, сон занимает 3 ячейки (12 байт) из 128 [(512 байт)](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis). По умолчанию стоит самая последняя возможная ячейка 125
 - `instant` - режим [deepSleepInstant](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis)
 - `mode` - режим сна wifi как в ESP.deepSleep, [документация](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis)
 
