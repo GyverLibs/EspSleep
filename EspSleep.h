@@ -10,7 +10,7 @@ class EspSleep {
     EspSleep(uint8_t rtc_offset = 125, bool instant = 0, WakeMode mode = RF_DEFAULT) : _rtc_offset(rtc_offset), _instant(instant), _mode(mode) {}
 
     // спать (миллисекунды, секунды, минуты, часы, дни)
-    void sleep(uint64_t ms, uint64_t sec = 0, uint32_t min = 0, uint16_t hour = 0, uint16_t day = 0) {
+    void sleep(uint64_t ms, uint32_t sec = 0, uint32_t min = 0, uint16_t hour = 0, uint16_t day = 0) {
         if (sec) ms += sec * 1000ull;
         if (min) ms += min * 60 * 1000ull;
         if (hour) ms += hour * 60 * 60 * 1000ull;
