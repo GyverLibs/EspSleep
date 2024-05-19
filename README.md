@@ -8,6 +8,8 @@
 
 # EspSleep
 Библиотека позволяет esp8266 уходить в сон на любой период (до ~585 миллиардов лет)
+- Выключает WiFi на время сна и включает согласно документации перед пробуждением, если режим WiFi не `RF_DISABLED`
+- Калибровка RTC (времени сна) каждое пробуждение
 
 ### Совместимость
 esp8266
@@ -26,9 +28,9 @@ esp8266
 ## Использование
 ### Инициализация
 ```cpp
-EspSleep(uint8_t rtc_offset = 125, bool instant = 0, WakeMode mode = RF_DEFAULT);
+EspSleep(uint8_t rtc_offset = 124, bool instant = 0, WakeMode mode = RF_DEFAULT);
 ```
-- `rtc_offset` - смещение для хранения остатка времени, сон занимает 3 ячейки (12 байт) из 128 [(512 байт)](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis). По умолчанию стоит самая последняя возможная ячейка - 125
+- `rtc_offset` - смещение для хранения остатка времени, сон занимает 4 ячейки (16 байт) из 128 [(512 байт)](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis). По умолчанию стоит самая последняя возможная ячейка - 124
 - `instant` - режим [deepSleepInstant](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis)
 - `mode` - режим сна wifi как в ESP.deepSleep, [документация](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis)
 
@@ -44,11 +46,18 @@ void sleep_us(uint64_t us);
 // Вернёт false, если это первый запуск мк и сон не запущен (true, если сон в процессе)
 bool tick();
 
+// true - первый запуск после сброса питания. ВЫЗЫВАТЬ ПОСЛЕ tick()!
+bool firstStart();
+
 // отменить следующий сон в tick
 void stop();
 
-// размер смещения (в 4-Б блоках, не в байтах!)
-size_t rtc_size();
+// === дефайны настроек (объявляется перед подключением библиотеки) ===
+// блок сна, по умолчанию 2 часа. Не рекомендуется больше 3 часов!
+#define MAX_SLEEP_BLOCK 2ull * 60 * 60 * 1000 * 1000
+
+// время калибровки, мкс. Установи 0, чтобы отключить
+#define RTC_CALI_BLOCK 50000
 ```
 
 ### Как это работает

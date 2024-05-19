@@ -16,7 +16,7 @@ sleep	KEYWORD2
 sleep_us	KEYWORD2
 tick	KEYWORD2
 stop	KEYWORD2
-rtc_size	KEYWORD2
+firstStart	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
