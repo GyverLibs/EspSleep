@@ -57,7 +57,7 @@ void stop();
 #define MAX_SLEEP_BLOCK 2ull * 60 * 60 * 1000 * 1000
 
 // время калибровки, мкс. Установи 0, чтобы отключить
-#define RTC_CALI_BLOCK 50000
+#define RTC_CALI_BLOCK 100000
 ```
 
 ### Как это работает
