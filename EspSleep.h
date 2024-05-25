@@ -6,7 +6,7 @@
 
 // время калибровки, мкс
 #ifndef RTC_CALI_BLOCK
-#define RTC_CALI_BLOCK 50000
+#define RTC_CALI_BLOCK 100000
 #endif
 
 // макс. блок сна, мкс
