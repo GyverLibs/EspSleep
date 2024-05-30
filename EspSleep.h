@@ -20,6 +20,7 @@
 class EspSleep {
     struct sleep_data {
         uint64_t left = 0;
+        int32_t cal_f = 0;
         bool enableWiFi = 0;
     };
 
@@ -44,14 +45,15 @@ class EspSleep {
             us = MAX_SLEEP_BLOCK;
         }
         if (_mode != RF_DISABLED) data.enableWiFi = 1;
-        rtc_write(&data, _rtc_offset);
-
-        if (RTC_CALI_BLOCK > 0) {
-            uint32_t rtc = get_rtc();
-            delayMicroseconds(RTC_CALI_BLOCK);
+        if (RTC_CALI_BLOCK > 0) {  // +1 warn /0
+            int32_t rtc = get_rtc();
+            delayMicroseconds(RTC_CALI_BLOCK + 1);
             rtc = get_rtc() - rtc;
-            us = us * rtc / (RTC_CALI_BLOCK + 1);   // warn
+            if (data.cal_f) data.cal_f = (data.cal_f + rtc) / 2;  // filt
+            else data.cal_f = rtc;                                // 1st
+            us = us * data.cal_f / (RTC_CALI_BLOCK + 1);
         }
+        rtc_write(&data, _rtc_offset);
         _instant ? ESP.deepSleepInstant(us, RF_DISABLED) : ESP.deepSleep(us, RF_DISABLED);
     }
 
