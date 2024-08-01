@@ -1,6 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #include <rtc_utils.h>
+#include <user_interface.h>
 
 #ifdef ESP8266
 
