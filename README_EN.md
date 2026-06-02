@@ -1,130 +1,138 @@
-This is an automatic translation, may be incorrect in some places. See sources and examples!
+This is an automatic translation and may be incorrect in some places. See the source README and examples for authoritative information.
 
-# Espsleep
-The library allows ESP8266 to go into a dream for any period (up to ~ 585 billion years)
-- turns off WiFi for the duration of sleep and turns on according to the documentation before waking up if the WiFi mode is not `rf_disabled`
-- Offline RTC calibration (sleep time) every awakening.On the tests carried out, the ESPSHA slept for 3 days with awakening every 6 hours, the time of awakening did not shift for any minute
+[![latest](https://img.shields.io/github/v/release/GyverLibs/EspSleep.svg?color=brightgreen)](https://github.com/GyverLibs/EspSleep/releases/latest/download/EspSleep.zip)
+[![PIO](https://badges.registry.platformio.org/packages/gyverlibs/library/EspSleep.svg)](https://registry.platformio.org/libraries/gyverlibs/EspSleep)
+[![Foo](https://img.shields.io/badge/Website-AlexGyver.ru-blue.svg?style=flat-square)](https://alexgyver.ru/)
+[![Foo](https://img.shields.io/badge/%E2%82%BD%24%E2%82%AC%20%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D1%82%D1%8C-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B0-orange.svg?style=flat-square)](https://alexgyver.ru/support_alex/)
+[![Foo](https://img.shields.io/badge/README-ENGLISH-blueviolet.svg?style=flat-square)](https://github-com.translate.goog/GyverLibs/EspSleep?_x_tr_sl=ru&_x_tr_tl=en)  
 
-## compatibility
-ESP8266
+[![Foo](https://img.shields.io/badge/ПОДПИСАТЬСЯ-НА%20ОБНОВЛЕНИЯ-brightgreen.svg?style=social&logo=telegram&color=blue)](https://t.me/GyverLibs)
+
+# EspSleep
+The library allows esp8266 to go to sleep for any period (up to ~585,000 years).
+- Turns off WiFi during sleep and on the documentation before waking up, if the WiFi mode is not`RF_DISABLED`
+- Offline calibration of RTC (sleep time) each awakening. According to the tests carried out, the espshka slept 3 days with waking up every 6 hours, the time of awakening did not shift by a single minute.
+
+### Compatibility
+esp8266
 
 ### Dependencies
-- [rtc_utils] (https://github.com/gyverlibs/rtc_utils)
+- [rtc_utils](https://github.com/GyverLibs/rtc_utils)
 
-## Content
-- [use] (#usage)
-- [versions] (#varsions)
-- [installation] (# Install)
-- [bugs and feedback] (#fedback)
+## Contents
+- [Use of use](#usage)
+- [Versions](#versions)
+- [Installation](#install)
+- [Bugs and feedback](#feedback)
 
-<a id="usage"> </a>
+<a id="usage"></a>
 
-## Usage
-## H initialization
-`` `CPP
-Espsleep (uint8_t rtc_offset = 124, bool Instant = 0, Wakemode mode = rf_default);
-`` `
-- `` rtc_offseet`- a displacement for storing the balance of time, sleep takes 4 cells (16 bytes) from 128 [(512 byte)] (https://arduino-esp8266.Riredocs.io/en/latest/libraries.htmlSpecific-Apis).By default is the latest possible cell - 124
--`Instant`-mode [deepsleepinStant] (https://arduino-esp8266.Redthedocs.io/en/latest/libraries.html#esp-specific-apis)
--`Mode`-WiFi sleep mode as in ESP.deepsleep, [documentation] (https://arduino-esp8266.Redteocs.io/en/libraries.html#esp-specific-apis)
+## Use of use
+### Initialization
+```cpp
+EspSleep(uint8_t rtc_offset = 124, bool instant = 0, WakeMode mode = RF_DEFAULT);
+```
+- `rtc_offset`Displacement to store the remainder of time, sleep takes 4 cells (16 bytes) out of 128[(512 bytes)](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis). By default, the most recent possible cell is 124.
+- `instant`- regime[deepSleepInstant](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis)
+- `mode`Sleep wifi as in ESP. deepSleep,[documentation](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis)
 
-### description of the class
-`` `CPP
-// to sleep (milliseconds, seconds, minutes, hours, days)
-VOID Sleep (Uint64_t MS, Uint32_T Sec = 0, Uint32_t Min = 0, Uint16_T Hour = 0, Uint16_T Day = 0);
+### Class description
+```cpp
+// sleeping (milliseconds, seconds, minutes, hours, days)
+void sleep(uint64_t ms, uint32_t sec = 0, uint32_t min = 0, uint16_t hour = 0, uint16_t day = 0);
 
-// Sleep, microseconds
-VOID Sleep_us (Uint64_T US);
+// sleep, microseconds
+void sleep_us(uint64_t us);
 
-// ticker of sleep blocks.Call at the beginning of the program.
-// will return false if this is the first launch of MK and the dream is not launched (true, if sleep in the process)
-Bool Tick ();
+// Sleep block ticker. Call at the beginning of the program.
+// Return false if this is the first start of the MK and sleep is not started (true, if sleep is in the process)
+bool tick();
 
-// True - the first launch after the diet.Call after Tick ()!
-Bool firststart ();
+// True is the first launch after the power drop. Call after the tick()!
+bool firstStart();
 
-// cancel the next dream in Tick
-VOID Stop ();
+// sleep off
+void stop();
 
-// === The defines of settings (declared before connecting the library) ====
-// Sleep block, by default 2 hours.Not recommended for more than 3 hours!
-#define max_sleep_block 2ull * 60 * 60 * 1000 * 1000
+// === Defile settings (announced before connecting the library) ===
+// Sleep block, default 2 hours. Not recommended for more than 3 hours!
+#define MAX_SLEEP_BLOCK 2ull * 60 * 60 * 1000 * 1000
 
-// Calibration time, ISS.Set 0 to turn off
-#define rtc_cali_block 100000
-`` `
+// Calibration time, mx. Set 0 to turn off
+#define RTC_CALI_BLOCK 100000
+```
 
-### How it works
-> To wake up the GPIO16 timer, it must be connected to RST!
+### How it works.
+> To wake up by timer, GPIO16 must be connected to RST!
 
-> The rest of the information on sleep [in the documentation] (https://arduino-esp8266.Riredocs.io/en/latest/libraries.html#esp-specific-pis)
+> The rest of sleep information[documentation](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#esp-specific-apis)
 
-ESP8266 cannot sleep with hardware than `ESP.deepsleepmax ()` microsecond (~ 3.2 hours).Therefore, the dream is crushed for periods equal to the maximum time of sleep, and the remaining time of sleep is recorded in RTC memory (RAM not cleansed during rebooting).To sleep in this mode with this library, you need to use the design of the type:
+Esp8266 cannot sleep for longer than`ESP.deepSleepMax()`microseconds (~3.2 hours). Therefore, sleep is divided into periods equal to the maximum sleep time, and the remaining sleep time is recorded in RTC memory (memory that is not cleared when rebooted). To sleep in this mode with this library, you need to use the design of the form:
 
-`` `CPP
-#include <espsleep.h>
-Espsleep Sleep;
+```cpp
+#include <EspSleep.h>
+EspSleep sleep;
 
-VOID setup () {
-// We wake up here
-// you can cancel the remaining dream through Sleep.Stop ()
+void setup() {
+    // wake up
+    // You can cancel your remaining sleep via sleep.stop()
 
-// ...
+    // ...
 
-// fall asleep if there is time to sleep
-// at the first supply of power on MK, nothing happens
-Sleep.tick ();
+    // We fall asleep if we have time to sleep.
+    // At the first feed on the mc nothing happens.
+    sleep.tick();
 
 
-// We get here when the time of sleep came out completely!
-// and also when feeding on MK
-Serial.begiCranberries N (115200);
-Serial.println ();
-Serial.println ("Awake!");
+    // We get here when the sleep time is completely out!
+    // And also when feeding to mc
+    Serial.begin(115200);
+    Serial.println();
+    Serial.println("awake!");
 
-// fall asleep for example here
-Sleep.sleep (5000);
+    // We fall asleep here.
+    sleep.sleep(5000);
 }
 
-VOID loop () {
-// you can go to sleep anywhere
-// ifo (foo) Sleep.sleep (5000);
+void loop() {
+    // You can sleep anywhere.
+    // if (foo) sleep.sleep(5000);
 }
-`` `
+```
 
-<a id="versions"> </a>
+<a id="versions"></a>
 
-## versions
-- V1.0
+## Versions
+- v1.0
 
-<a id="install"> </a>
+<a id="install"></a>
 ## Installation
-- The library can be found by the title ** Espsleep ** and installed through the library manager in:
-- Arduino ide
-- Arduino ide v2
-- Platformio
-- [download the library] (https://github.com/gyverlibs/espsleep/archive/refs/heads/main.zip) .Zip archive for manual installation:
-- unpack and put in * C: \ Program Files (X86) \ Arduino \ Libraries * (Windows X64)
-- unpack and put in * C: \ Program Files \ Arduino \ Libraries * (Windows X32)
-- unpack and put in *documents/arduino/libraries/ *
-- (Arduino id) Automatic installation from. Zip: * sketch/connect the library/add .Zip library ... * and specify downloaded archive
-- Read more detailed instructions for installing libraries [here] (https://alexgyver.ru/arduino-first/#%D0%A3%D1%81%D1%82%D0%B0%BD%D0%BE%BE%BE%BED0%B2%D0%BA%D0%B0_%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA)
+- The library can be found under the name **EspSleep** and installed through the library manager in:
+    - Arduino IDE
+    - Arduino IDE v2
+    - PlatformIO
+- [Download the library](https://github.com/GyverLibs/EspSleep/archive/refs/heads/main.zip).zip archive for manual installation:
+    - Unpack and put in *C:\Program Files (x86)\Arduino\libraries* (Windows x64)
+    - Unpack and put in *C:\Program Files\Arduino\libraries* (Windows x32)
+    - Unpack and put in *Documents/Arduino/libraries/ *
+    - (Arduino IDE) Automatic installation from .zip: *Sketch/Connect library/Add .ZIP library...* and specify downloaded archive
+- Read more detailed instructions for installing libraries[here](https://alexgyver.ru/arduino-first/#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA)
 ### Update
-- I recommend always updating the library: errors and bugs are corrected in the new versions, as well as optimization and new features are added
-- through the IDE library manager: find the library how to install and click "update"
-- Manually: ** remove the folder with the old version **, and then put a new one in its place.“Replacement” cannot be done: sometimes in new versions, files that remain when replacing are deleted and can lead to errors!
+- I recommend always updating the library: new versions fix errors and bugs, as well as optimize and add new features.
+- Through the library manager IDE: find the library as when installing and click "Update"
+- Manually: **Delete the folder with the old version** and then put the new one in its place. “Replacement” can not be done: sometimes new versions delete files that will remain when replaced and can lead to errors!
 
-<a id="feedback"> </a>
+<a id="feedback"></a>
 
-## bugs and feedback
-Create ** Issue ** when you find the bugs, and better immediately write to the mail [alex@alexgyver.ru] (mailto: alex@alexgyver.ru)
-The library is open for refinement and your ** pull Request ** 'ow!
+## Bugs and feedback
+If you find bugs, create **Issue**, or better write to the mail immediately.[alex@alexgyver.ru](mailto:alex@alexgyver.ru)  
+The library is open for revision and your **Pull Requests*!
 
-When reporting about bugs or incorrect work of the library, it is necessary to indicate:
-- The version of the library
-- What is MK used
+When reporting bugs or incorrect work of the library, it is necessary to specify:
+- Library version
+- What is used by the IC
 - SDK version (for ESP)
-- version of Arduino ide
-- whether the built -in examples work correctly, in which the functions and designs are used, leading to a bug in your code
-- what code has been loaded, what work was expected from it and how it works in reality
-- Ideally, attach the minimum code in which the bug is observed.Not a canvas of a thousand lines, but a minimum code
+- Arduino IDE version
+- Are embedded examples that use features and designs that cause bugs in your code working correctly?
+- What code was downloaded, what work was expected from it and how it works in reality
+- Ideally, attach the minimum code in which the bug is observed. Not a canvas of a thousand lines, but a minimum code.
